@@ -19,38 +19,38 @@ def submit():
         return render_template("submit.html")
     else:
         try:
+            insert_message(request)
             return render_template("submit.html", name = request.form["name"], message = request.form["message"])
         except:
             return render_template("submit.html")
 
 
 
-# def get_message_db():
-#     if 'db' not in g:
-#         g.message_db = sqlite3.connect('message_db.sqlite')
+def get_message_db():
+    if 'db' not in g:
+        g.message_db = sqlite3.connect('message_db.sqlite')
         
-#     conn = g.message_db
-#     cursor = conn.cursor()
+    conn = g.message_db
+    cursor = conn.cursor()
 
-#     # Create table if it doesn't exist
-#     cursor.execute("CREATE TABLE IF NOT EXISTS messages (ID INTEGER PRIMARY KEY AUTOINCREMENT, messages TEXT, name TEXT)")
-#     return g.message_db   
+    # Create table if it doesn't exist
+    cursor.execute("CREATE TABLE IF NOT EXISTS messages (ID INTEGER PRIMARY KEY AUTOINCREMENT, messages TEXT, name TEXT)")
+    return g.message_db   
 
 
-# def insert_message(request):
-#     message = request.form["message"]
-#     name = request.form["name"]
+def insert_message(request):
+    message = request.form["message"]
+    name = request.form["name"]
 
-#     db = get_message_db()
+    db = get_message_db()
 
-#     db.execute(
-#                 'INSERT INTO message (messages, name) VALUES (?, ?)',
-#                 (username, salt, generate_password_hash(password + salt))
-#             )
+    db.execute(
+                'INSERT INTO message (messages, name) VALUES (?, ?)',
+                (message, name)
+            )
+    db.commit()
 
-#     db.commit()
-
-#     conn.close()
+    conn.close()
 
 
 
