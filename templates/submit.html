@@ -15,4 +15,10 @@
       <br>
       <input type="submit" value="Submit message">
   </form>
+  {% if (name) and (message) %}
+  <br>
+  <b>Hello {{name}}, Thank you for submitting your message! </b>
+  {% else %}
+  <b> Please submit all entries </b>
+  {% endif %}
 {% endblock %}
