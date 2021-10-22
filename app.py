@@ -31,10 +31,11 @@ def get_message_db():
     if 'db' not in g:
         g.message_db = sqlite3.connect('users.sqlite')
 
-    cursor = g.message_db.cursor()
-    cursor.execute("CREATE TABLE IF NOT EXISTS messages AS SELECT id, handle, message;")
+    with current_app.open_resource('init.sql') as f:
+        g.message_db.executescript(f.read().decode('utf8'))
 
-    return g.auth_db
+    return g.message_db
+
 
 
     
