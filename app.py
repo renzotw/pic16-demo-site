@@ -4,7 +4,7 @@ app = Flask(__name__)
 @app.route("/")
 # simplest possible approach
 def main():
-    return render_template("main.html") # Searches in template directory for main.html
+    return render_template("base.html") # Searches in template directory for main.html
 
 @app.route("/submit/", methods = ["POST", "GET"])
 def submit():
