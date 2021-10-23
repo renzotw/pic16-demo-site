@@ -33,24 +33,23 @@ def get_message_db():
     cursor = conn.cursor()
 
     # Create table if it doesn't exist
-    cursor.execute("CREATE TABLE IF NOT EXISTS messages (ID INTEGER PRIMARY KEY AUTOINCREMENT, handle TEXT, message TEXT)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS messages (ID INTEGER PRIMARY KEY AUTOINCREMENT, handle TEXT, message TEXT);")
     
     return g.message_db   
 
 
 def insert_message(request):
     message = request.form["message"]
-    name = request.form["name"]
+    handle = request.form["name"]
 
     db = get_message_db()
 
-    db.execute(
-                'INSERT INTO message (messages, name) VALUES (?, ?)',
-                (message, name)
-            )
+    db.execute("INSERT INTO messages (handle, message) VALUES (?,?);")
     db.commit()
 
     conn.close()
+
+    return message, handle
 
 
 
