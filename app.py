@@ -19,7 +19,6 @@ def submit():
         return render_template("submit.html")
     else:
         try:
-            insert_message(request)
             return render_template("submit.html", name = request.form["name"], message = request.form["message"])
         except:
             return render_template("submit.html")
@@ -29,12 +28,13 @@ def submit():
 def get_message_db():
     if 'db' not in g:
         g.message_db = sqlite3.connect('message_db.sqlite')
-        
+
     conn = g.message_db
     cursor = conn.cursor()
 
     # Create table if it doesn't exist
-    cursor.execute("CREATE TABLE IF NOT EXISTS messages (ID INTEGER PRIMARY KEY AUTOINCREMENT, messages TEXT, name TEXT)")
+    cursor.execute("CREATE TABLE IF NOT EXISTS messages (ID INTEGER PRIMARY KEY AUTOINCREMENT, handle TEXT, message TEXT)")
+    
     return g.message_db   
 
 
