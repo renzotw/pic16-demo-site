@@ -57,4 +57,27 @@ def insert_message(request):
 
     return message, handle
 
+
+
+# DON'T DELETE ANYTHING ABOVE
+
+@app.route('/view/')
+def view():
+    limit = 5
+    mylist = random_messages(limit)
+    return render_template('view.html', message_list=mylist)
+
+def random_messages(n):
+
+    db = get_message_db()
+
+    cursor = db.cursor()
+
+    cursor.execute("SELECT message, handle FROM messages ORDER BY RANDOM() LIMIT (?)", (n,))
+    messages = cursor.fetchall()
+
+    db.close()
+
+    return messages
+
     
